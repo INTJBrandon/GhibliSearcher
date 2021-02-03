@@ -1,5 +1,6 @@
 class Cli
     def welcome
-        puts "Welcome To Ghibli Searcher!"
+        puts ""
+        puts "Welcome To The Ghibli Searcher!"
     end
 end
