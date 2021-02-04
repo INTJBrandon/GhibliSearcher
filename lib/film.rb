@@ -1,5 +1,5 @@
 class Film
-    attr_accessor :title, :description, :director, :producer, :release_date, :rotten_score
+    attr_accessor :title, :description, :director, :producer, :release_date, :rotten_score 
     @@all = []
     def initialize(hash)
         hash.each do |key, value|
