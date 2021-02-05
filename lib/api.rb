@@ -13,22 +13,23 @@ class Api
             Film.new(film_hash)
             end 
         elsif num == 1
-            f_response = response[0]["films"][0]
-            film_appeared = HTTParty.get(f_response)
-            response.map do |movie|
-                character_hash = { name: movie["name"], gender: movie["gender"], age: movie["age"], eye_color: movie["eye_color"], hair_color: movie["hair_color"], film: film_appeared["title"]
+            response.map do |character|
+                f_response = character["films"][0]
+                film_appeared = HTTParty.get(f_response)
+                character_hash = { name: character["name"], gender: character["gender"], age: character["age"], eye_color: character["eye_color"], hair_color: character[0]["hair_color"], film: film_appeared["title"]
                 }
                 Character.new(character_hash)
             end
         elsif num == 2
-            f_response = response[0]["films"]
-            film_appeared = HTTParty.get(f_response)
-            p_response = response[0]["pilot"]
-            vehicle_pilot = HTTParty.get(p_response)
+            response.map do |vehicle|
+                f_response = vehicle["films"]
+                film_appeared = HTTParty.get(f_response)
+                p_response = vehicle["pilot"]
+                vehicle_pilot = HTTParty.get(p_response)
 
-            vehicle_hash = {name: response[0]["name"], description: response[0]["description"], class: response[0]["vehicle_class"], length: response[0]["length"], pilot: vehicle_pilot["name"], film: film_appeared["title"]}
-
-            Vehicle.new(vehicle_hash)
+                vehicle_hash = {name: vehicle["name"], description: vehicle["description"], class: vehicle["vehicle_class"], length: vehicle["length"], pilot: vehicle_pilot["name"], film: film_appeared["title"]}
+                Vehicle.new(vehicle_hash)
+            end
         end
     end
 end

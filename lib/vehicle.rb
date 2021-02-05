@@ -4,8 +4,8 @@ class Vehicle
     def initialize(hash)
         hash.each do |key, value|
             self.send("#{key}=", value) if self.respond_to?("#{key}=")
-            @@all << self
         end
+        @@all << self
     end
 
     def self.all

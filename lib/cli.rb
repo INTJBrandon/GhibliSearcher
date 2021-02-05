@@ -18,11 +18,11 @@ class Cli
         else
             input -= 1
         end
-        search = Api.request(input)
+        Api.request(input)
         if input == 0
             self.movies
         elsif input == 1
-            self.characters(search)
+            self.characters
         elsif input == 2
             self.vehicles(search)
         end
@@ -65,15 +65,42 @@ class Cli
             exit
         end
     end
+    def characters
+        puts "~~ Studio Ghibli Character Searcher ~~"
+        puts "Please select a character you'd like to view information for" + "\n\n"
+        Character.all.each_with_index do |char, index|
+            puts "#{index + 1}: #{char.name}"
+        end
+        puts "\n"
+        input = gets.strip
+        input = input.to_i
+        if input.is_a? String || input > Character.all.length || input <= 0
+            puts "Please enter a number shown on screen"
+        else
+            input -= 1
+        end
+        self.character_detail(input)
+    end
 
-    def characters(choice)
+    def character_detail(choice)
+        character_choice = Character.all[choice]
         puts "~~ Studio Ghibli Vehicle Searcher ~~"
-        puts "Name: #{choice.name}"
-        puts "Gender: #{choice.gender}"
-        puts "age: #{choice.age}"
-        puts "Eye Color: #{choice.eye_color}"
-        puts "Hair Color: #{choice.hair_color}"
-        puts "Film Appeared In: #{choice.film}"
+        puts "Name: #{character_choice.name}"
+        puts "Gender: #{character_choice.gender}"
+        puts "age: #{character_choice.age}"
+        puts "Eye Color: #{character_choice.eye_color}"
+        puts "Hair Color: #{character_choice.hair_color}"
+        puts "Film Appeared In: #{character_choice.film}"
+        puts "\n"
+        puts "Would you like to go back to the previous list?"
+        puts "1: Yes"
+        puts "2: Exit"
+        input = gets.strip
+        if input == "1"
+            self.characters
+        elsif input == "2"
+            exit
+        end
     end
     
     def vehicles(choice)
