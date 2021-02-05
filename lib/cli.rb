@@ -20,7 +20,7 @@ class Cli
         end
         search = Api.request(input)
         if input == 0
-            self.movies(search)
+            self.movies
         elsif input == 1
             self.characters(search)
         elsif input == 2
@@ -28,7 +28,7 @@ class Cli
         end
     end
 
-    def movies(choice)
+    def movies
         puts "~~ Studio Ghibli Film Searcher ~~"
         puts "Please select a film you'd like to view information for" + "\n\n"
         Film.all.each_with_index do |movie, index|
@@ -60,7 +60,9 @@ class Cli
         puts "2: Exit"
         input = gets.strip
         if input == "1"
-            movies
+            movies()
+        elsif input == "2"
+            exit
         end
     end
 
