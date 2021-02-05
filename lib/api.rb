@@ -6,7 +6,6 @@ class Api
         url = "https://ghibliapi.herokuapp.com/#{@@choices[num]}"
         response = HTTParty.get(url)
         if num == 0
-            film_hash = {}
             response.map do |movie|
             film_hash = {
                 title: movie["title"], description: movie["description"], director: movie["director"], producer: movie["producer"], release_date: movie["release_date"], rotten_score: movie["rt_score"]
@@ -16,10 +15,11 @@ class Api
         elsif num == 1
             f_response = response[0]["films"][0]
             film_appeared = HTTParty.get(f_response)
-
-            character_hash = { name: response[0]["name"], gender: response[0]["gender"], age: response[0]["age"], eye_color: response[0]["eye_color"], hair_color: response[0]["hair_color"], film: film_appeared["title"]
-            }
-            Character.new(character_hash)
+            response.map do |movie|
+                character_hash = { name: movie["name"], gender: movie["gender"], age: movie["age"], eye_color: movie["eye_color"], hair_color: movie["hair_color"], film: film_appeared["title"]
+                }
+                Character.new(character_hash)
+            end
         elsif num == 2
             f_response = response[0]["films"]
             film_appeared = HTTParty.get(f_response)

@@ -60,7 +60,7 @@ class Cli
         puts "2: Exit"
         input = gets.strip
         if input == "1"
-            movies()
+            self.movies
         elsif input == "2"
             exit
         end
