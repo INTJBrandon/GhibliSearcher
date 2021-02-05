@@ -37,22 +37,22 @@ class Cli
         puts "\n"
         puts "If you would like to go back to previous screen please type 'back'"
         input = gets.strip
-        if input.is_a? String
+        if input.numeric?
+            input = input.to_i
+            if input > Film.all.length || input <= 0
+                puts "Please enter a number shown on screen"
+            else
+                input -= 1
+                movie_detail(input)
+            end
+        else
             input.downcase!
-            if input == "back"
+            if input == 'back'
                 ask_for_choice
             else
                 "That's not a choice, please select again"
             end
-            binding.pry
         end
-        input = input.to_i
-        if input.is_a? String || input > Film.all.length || input <= 0
-            puts "Please enter a number shown on screen"
-        else
-            input -= 1
-        end
-        movie_detail(input)
     end
 
     def movie_detail(choice)
