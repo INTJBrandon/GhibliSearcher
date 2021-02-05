@@ -6,24 +6,39 @@ class Cli
     end
 
     def ask_for_choice
-        puts "What would you like to search for?"
+        puts "What would you like to search for or type exit to exit the program!"
         puts "1. Films"
         puts "2. People"
         puts "3. Vehicles"
         input = gets.strip
-        input = input.to_i
-        if input.is_a? String || input > 3 || input <= 0
-            puts "Please enter a number shown on screen"
-            self.ask_for_choice40
-        else
-            input -= 1
+        if input.numeric?
+            input = input.to_i
+            if input > 3 || input <= 0
+                puts "\n"
+                puts "That is not a valid choice. Please enter a number shown on screen!"
+                puts "\n"
+                self.ask_for_choice
+            else
+                input -= 1
+            end
+        elsif !input.numeric?
+            input.downcase
+            if input == "exit"
+                exit
+            else
+                puts "That is not a valid choice. Please enter a number shown on screen!"
+                puts "\n"
+                self.ask_for_choice
+            end
         end
-        Api.request(input)
         if input == 0
+            Api.request(input) if Film.all.empty?
             self.movies
         elsif input == 1
+            Api.request(input) if Character.all.empty?
             self.characters
         elsif input == 2
+            Api.request(input) if Vehicle.all.empty?
             self.vehicles
         end
     end
@@ -78,18 +93,29 @@ class Cli
     def characters
         puts "~~ Studio Ghibli Character Searcher ~~"
         puts "Please select a character you'd like to view information for" + "\n\n"
+
         Character.all.each_with_index do |char, index|
             puts "#{index + 1}: #{char.name}"
         end
         puts "\n"
+        puts "If you would like to go back to previous screen please type 'back'"
         input = gets.strip
-        input = input.to_i
-        if input.is_a? String || input > Character.all.length || input <= 0
-            puts "Please enter a number shown on screen"
+        if input.numeric?
+            input = input.to_i
+            if input > Character.all.length || input <= 0
+                puts "Please enter a number shown on screen"
+            else
+                input -= 1
+                character_detail(input)
+            end
         else
-            input -= 1
+            input.downcase!
+            if input == 'back'
+                ask_for_choice
+            else
+                "That's not a choice, please select again"
+            end
         end
-        self.character_detail(input)
     end
 
     def character_detail(choice)
@@ -119,15 +145,26 @@ class Cli
             puts "#{index + 1}: #{vehicle.name}"
         end
         puts "\n"
+        puts "If you would like to go back to previous screen please type 'back'"
         input = gets.strip
-        input = input.to_i
-        if input.is_a? String || input > Vehicle.all.length || input <= 0
-            puts "Please enter a number shown on screen"
+        if input.numeric?
+            input = input.to_i
+            if input > Vehicle.all.length || input <= 0
+                puts "Please enter a number shown on screen"
+            else
+                input -= 1
+                vehicle_detail(input)
+            end
         else
-            input -= 1
+            input.downcase!
+            if input == 'back'
+                ask_for_choice
+            else
+                "That's not a choice, please select again"
+            end
         end
-        self.vehicle_detail(input)
     end
+
     def vehicle_detail(choice)
         vehicle_choice = Vehicle.all[choice]
         puts "~~ Studio Ghibli character Searcher ~~"

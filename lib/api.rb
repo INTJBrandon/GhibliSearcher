@@ -16,7 +16,7 @@ class Api
             response.map do |character|
                 f_response = character["films"][0]
                 film_appeared = HTTParty.get(f_response)
-                character_hash = { name: character["name"], gender: character["gender"], age: character["age"], eye_color: character["eye_color"], hair_color: character[0]["hair_color"], film: film_appeared["title"]
+                character_hash = { name: character["name"], gender: character["gender"], age: character["age"], eye_color: character["eye_color"], hair_color: character["hair_color"], film: film_appeared["title"]
                 }
                 Character.new(character_hash)
             end
@@ -26,7 +26,6 @@ class Api
                 film_appeared = HTTParty.get(f_response)
                 p_response = vehicle["pilot"]
                 vehicle_pilot = HTTParty.get(p_response)
-                binding.pry
 
                 vehicle_hash = {name: vehicle["name"], description: vehicle["description"], class: vehicle["vehicle_class"], length: vehicle["length"], pilot: vehicle_pilot["name"], film: film_appeared["title"]}
                 Vehicle.new(vehicle_hash)
