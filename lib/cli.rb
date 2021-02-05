@@ -24,7 +24,7 @@ class Cli
         elsif input == 1
             self.characters
         elsif input == 2
-            self.vehicles(search)
+            self.vehicles
         end
     end
 
@@ -102,8 +102,23 @@ class Cli
             exit
         end
     end
-    
-    def vehicles(choice)
+    def vehicles
+        puts "~~ Studio Ghibli Vehicle Searcher ~~"
+        puts "Please select a vehicle you'd like to view information for" + "\n\n"
+        Vehicle.all.each_with_index do |vehicle, index|
+            puts "#{index + 1}: #{vehicle.name}"
+        end
+        puts "\n"
+        input = gets.strip
+        input = input.to_i
+        if input.is_a? String || input > Vehicle.all.length || input <= 0
+            puts "Please enter a number shown on screen"
+        else
+            input -= 1
+        end
+        self.vehicle_detail(input)
+    end
+    def vehicles_detail
         puts "~~ Studio Ghibli character Searcher ~~"
         puts "Name: #{choice.name}"
         puts "Description: #{choice.description}"
