@@ -11,10 +11,10 @@ class Cli
         puts "2. People"
         puts "3. Vehicles"
         input = gets.strip
-        #  do something with choice
         input = input.to_i
         if input.is_a? String || input > 3 || input <= 0
             puts "Please enter a number shown on screen"
+            self.ask_for_choice40
         else
             input -= 1
         end
@@ -35,7 +35,17 @@ class Cli
             puts "#{index + 1}: #{movie.title}"
         end
         puts "\n"
+        puts "If you would like to go back to previous screen please type 'back'"
         input = gets.strip
+        if input.is_a? String
+            input.downcase!
+            if input == "back"
+                ask_for_choice
+            else
+                "That's not a choice, please select again"
+            end
+            binding.pry
+        end
         input = input.to_i
         if input.is_a? String || input > Film.all.length || input <= 0
             puts "Please enter a number shown on screen"
@@ -118,14 +128,25 @@ class Cli
         end
         self.vehicle_detail(input)
     end
-    def vehicles_detail
+    def vehicle_detail(choice)
+        vehicle_choice = Vehicle.all[choice]
         puts "~~ Studio Ghibli character Searcher ~~"
-        puts "Name: #{choice.name}"
-        puts "Description: #{choice.description}"
-        puts "Vehicle Class: #{choice.class}"
-        puts "Size: #{choice.length} FT"
-        puts "Pilot: #{choice.pilot}"
-        puts "Film Appeared In: #{choice.film}"
+        puts "Name: #{vehicle_choice.name}"
+        puts "Description: #{vehicle_choice.description}"
+        puts "Vehicle Class: #{vehicle_choice.class}"
+        puts "Size: #{vehicle_choice.length} FT"
+        puts "Pilot: #{vehicle_choice.pilot}"
+        puts "Film Appeared In: #{vehicle_choice.film}"
+        puts "\n"
+        puts "Would you like to go back to the previous list?"
+        puts "1: Yes"
+        puts "2: Exit"
+        input = gets.strip
+        if input == "1"
+            self.vehicles
+        elsif input == "2"
+            exit
+        end
     end
 
 

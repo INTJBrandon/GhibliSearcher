@@ -26,6 +26,7 @@ class Api
                 film_appeared = HTTParty.get(f_response)
                 p_response = vehicle["pilot"]
                 vehicle_pilot = HTTParty.get(p_response)
+                binding.pry
 
                 vehicle_hash = {name: vehicle["name"], description: vehicle["description"], class: vehicle["vehicle_class"], length: vehicle["length"], pilot: vehicle_pilot["name"], film: film_appeared["title"]}
                 Vehicle.new(vehicle_hash)
