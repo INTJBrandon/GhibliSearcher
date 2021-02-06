@@ -1,34 +1,38 @@
 class Cli
+    @@all = []
     def welcome
-        puts ""
-        puts "Welcome To The Ghibli Searcher!"
-        self.ask_for_choice
+        if @@all.empty?
+            puts ""
+            puts "Welcome To The Ghibli Searcher!"
+            @@all << self
+            self.ask_for_choice
+        else
+            puts ""
+            puts "Welcome To The Ghibli Searcher!"
+            self.ask_for_choice("That is not a valid choice. Please enter a number shown on screen!")
+        end
     end
 
-    def ask_for_choice
-        puts "What would you like to search for or type exit to exit the program!"
-        puts "1. Films"
-        puts "2. People"
-        puts "3. Vehicles"
+    def ask_for_choice(error_message="")
+        puts "What would you like to search for or type exit to 'exit' the program!"
+        puts "1: Films"
+        puts "2: People"
+        puts "3: Vehicles"
+        puts error_message
         input = gets.strip
         if input.numeric?
             input = input.to_i
             if input > 3 || input <= 0
-                puts "\n"
-                puts "That is not a valid choice. Please enter a number shown on screen!"
-                puts "\n"
-                self.ask_for_choice
+                self.welcome
             else
                 input -= 1
             end
         elsif !input.numeric?
-            input.downcase
+            input.downcase!
             if input == "exit"
                 exit
             else
-                puts "That is not a valid choice. Please enter a number shown on screen!"
-                puts "\n"
-                self.ask_for_choice
+                self.welcome
             end
         end
         if input == 0
@@ -43,7 +47,8 @@ class Cli
         end
     end
 
-    def movies
+    def movies(error_message="")
+        puts "\n"
         puts "~~ Studio Ghibli Film Searcher ~~"
         puts "Please select a film you'd like to view information for" + "\n\n"
         Film.all.each_with_index do |movie, index|
@@ -51,21 +56,23 @@ class Cli
         end
         puts "\n"
         puts "If you would like to go back to previous screen please type 'back'"
+        puts error_message
         input = gets.strip
         if input.numeric?
             input = input.to_i
             if input > Film.all.length || input <= 0
-                puts "Please enter a number shown on screen"
+                # binding.pry
+                self.movies("That is not a valid choice. Please enter a number shown on screen!")
             else
                 input -= 1
                 movie_detail(input)
             end
-        else
+        else 
             input.downcase!
             if input == 'back'
                 ask_for_choice
             else
-                "That's not a choice, please select again"
+                self.movies(("That is not a valid choice. Please enter a number shown on screen!"))
             end
         end
     end
@@ -84,12 +91,13 @@ class Cli
         puts "1: Yes"
         puts "2: Exit"
         input = gets.strip
-        if input == "1"
+        if input.numeric?
             self.movies
         elsif input == "2"
             exit
         end
     end
+
     def characters
         puts "~~ Studio Ghibli Character Searcher ~~"
         puts "Please select a character you'd like to view information for" + "\n\n"
@@ -132,6 +140,7 @@ class Cli
         puts "1: Yes"
         puts "2: Exit"
         input = gets.strip
+        binding.pry
         if input == "1"
             self.characters
         elsif input == "2"
