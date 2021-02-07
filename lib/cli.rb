@@ -198,7 +198,7 @@ class Cli
         end
     end
 
-    def vehicle_detail(choice)
+    def vehicle_detail(choice, error_message="")
         vehicle_choice = Vehicle.all[choice]
         puts "~~ Studio Ghibli character Searcher ~~"
         puts "Name: #{vehicle_choice.name}"
@@ -209,15 +209,25 @@ class Cli
         puts "Film Appeared In: #{vehicle_choice.film}"
         puts "\n"
         puts "Would you like to go back to the previous list?"
+        puts error_message
         puts "1: Yes"
         puts "2: Exit"
         input = gets.strip
-        if input == "1"
-            self.vehicles
-        elsif input == "2"
-            exit
+        if input.numeric?
+            if input == "1"
+                self.vehicles
+            elsif  input == "2"
+                exit
+            else
+                self.vehicle_detail(choice, "That is not a valid choice. Please enter a number shown on screen!")
+            end
+        elsif !input.numeric?
+            input.downcase!
+            if input == "exit"
+                exit
+            else
+                self.vehicle_detail(choice, "That is not a valid choice. Please enter a number shown on screen!")
+            end
         end
     end
-
-
 end
