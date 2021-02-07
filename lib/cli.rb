@@ -142,7 +142,7 @@ class Cli
 
     def character_detail(choice, error_message="")
         character_choice = Character.all[choice]
-        puts "~~ Studio Ghibli Vehicle Searcher ~~"
+        puts "~~ Studio Ghibli Character Searcher ~~"
         puts "Name: #{character_choice.name}"
         puts "Gender: #{character_choice.gender}"
         puts "age: #{character_choice.age}"
@@ -203,7 +203,7 @@ class Cli
 
     def vehicle_detail(choice, error_message="")
         vehicle_choice = Vehicle.all[choice]
-        puts "~~ Studio Ghibli character Searcher ~~"
+        puts "~~ Studio Ghibli Vehicle Searcher ~~"
         puts "Name: #{vehicle_choice.name}"
         puts "Description: #{vehicle_choice.description}"
         puts "Vehicle Class: #{vehicle_choice.class}"
