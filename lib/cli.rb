@@ -1,19 +1,21 @@
 class Cli
-    @@all = []
-    def welcome
-        if @@all.empty?
-            puts ""
-            puts "Welcome To The Ghibli Searcher!"
-            @@all << self
-            self.ask_for_choice
-        else
-            puts ""
-            puts "Welcome To The Ghibli Searcher!"
-            self.ask_for_choice("That is not a valid choice. Please enter a number shown on screen!")
-        end
-    end
+    # @@all = []
+    # def welcome
+    #     if @@all.empty?
+    #         puts ""
+    #         puts "Welcome To The Ghibli Searcher!"
+    #         @@all << self
+    #         self.ask_for_choice
+    #     else
+    #         puts ""
+    #         puts "Welcome To The Ghibli Searcher!"
+    #         self.ask_for_choice("That is not a valid choice. Please enter a number shown on screen!")
+    #     end
+    # end
 
     def ask_for_choice(error_message="")
+        puts "\n"
+        puts "Welcome To The Ghibli Searcher!"
         puts "What would you like to search for or type exit to 'exit' the program!"
         puts "1: Films"
         puts "2: People"
@@ -23,7 +25,7 @@ class Cli
         if input.numeric?
             input = input.to_i
             if input > 3 || input <= 0
-                self.welcome
+                self.ask_for_choice("That is not a valid choice. Please enter a number shown on screen!")
             else
                 input -= 1
             end
@@ -32,7 +34,7 @@ class Cli
             if input == "exit"
                 exit
             else
-                self.welcome
+                self.ask_for_choice("That is not a valid choice. Please enter a number shown on screen!")
             end
         end
         if input == 0
@@ -179,6 +181,7 @@ class Cli
         end
         puts "\n"
         puts "If you would like to go back to previous screen please type 'back'"
+        puts error_message
         input = gets.strip
         if input.numeric?
             input = input.to_i

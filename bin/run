@@ -1,4 +1,4 @@
 #!/user/bin/env ruby 
 require_relative('../config/environment')
 
-Cli.new.welcome
+Cli.new.ask_for_choice
