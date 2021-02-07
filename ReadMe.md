@@ -12,4 +12,4 @@ The Ghibli Searcher uses the Studio Ghibli Api to list out all the movies, chara
 The way to use this program is to fork and clone this github repository 
 Once the github repository is on your system open it with any code editor
 
-  bundle install
+    bundle install
