@@ -170,8 +170,8 @@ class Cli
             end
         end
     end
-    
-    def vehicles
+
+    def vehicles(error_message="")
         puts "~~ Studio Ghibli Vehicle Searcher ~~"
         puts "Please select a vehicle you'd like to view information for" + "\n\n"
         Vehicle.all.each_with_index do |vehicle, index|
@@ -183,17 +183,17 @@ class Cli
         if input.numeric?
             input = input.to_i
             if input > Vehicle.all.length || input <= 0
-                puts "Please enter a number shown on screen"
+                self.vehicles("That is not a valid choice. Please enter a number shown on screen!")
             else
                 input -= 1
                 vehicle_detail(input)
             end
-        else
+        else 
             input.downcase!
             if input == 'back'
                 ask_for_choice
             else
-                "That's not a choice, please select again"
+                self.vehicles("That is not a valid choice. Please enter a number shown on screen!")
             end
         end
     end
