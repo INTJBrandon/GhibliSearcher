@@ -80,7 +80,7 @@ class Cli
 
     def movie_detail(choice, error_message="")
         movie_choice = Film.all[choice]
-        puts "\n"
+        puts "~~ Studio Ghibli Film Searcher ~~"
         puts "Title of Movie: #{movie_choice.title}"
         puts "Description: #{movie_choice.description}"
         puts "Director: #{movie_choice.director}"
