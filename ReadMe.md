@@ -16,6 +16,10 @@ To run The Ghibli Searcher, type the following into your terminal to execute the
     ruby bin/run
 Follow the prompts to move through the program and enjoy!!
 
+## Authors
+ *Brandon Tyus*
+    [Brandon Tyus](https://github.com/INTJBrandon)
+
 ## License
 
 This project is licensed under the [CC0 1.0 Universal](LICENSE.md)
