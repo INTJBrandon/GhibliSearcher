@@ -61,7 +61,6 @@ class Cli
         if input.numeric?
             input = input.to_i
             if input > Film.all.length || input <= 0
-                # binding.pry
                 self.movies("That is not a valid choice. Please enter a number shown on screen!")
             else
                 input -= 1
@@ -72,12 +71,12 @@ class Cli
             if input == 'back'
                 ask_for_choice
             else
-                self.movies(("That is not a valid choice. Please enter a number shown on screen!"))
+                self.movies("That is not a valid choice. Please enter a number shown on screen!")
             end
         end
     end
 
-    def movie_detail(choice)
+    def movie_detail(choice, error_message="")
         movie_choice = Film.all[choice]
         puts "\n"
         puts "Title of Movie: #{movie_choice.title}"
@@ -88,17 +87,29 @@ class Cli
         puts "Rotten Tomato Score: #{movie_choice.rotten_score}%"
         puts "\n"
         puts "Would you like to go back to the previous list?"
+        puts error_message
         puts "1: Yes"
         puts "2: Exit"
         input = gets.strip
         if input.numeric?
-            self.movies
-        elsif input == "2"
-            exit
+            if input == "1"
+                self.movies
+            elsif  input == "2"
+                exit
+            else
+                self.movie_detail(choice, "That is not a valid choice. Please enter a number shown on screen!")
+            end
+        elsif !input.numeric?
+            input.downcase!
+            if input == "exit"
+                exit
+            else
+                self.movie_detail(choice, "That is not a valid choice. Please enter a number shown on screen!")
+            end
         end
     end
 
-    def characters
+    def characters(error_message="")
         puts "~~ Studio Ghibli Character Searcher ~~"
         puts "Please select a character you'd like to view information for" + "\n\n"
 
@@ -107,26 +118,27 @@ class Cli
         end
         puts "\n"
         puts "If you would like to go back to previous screen please type 'back'"
+        puts error_message
         input = gets.strip
         if input.numeric?
             input = input.to_i
             if input > Character.all.length || input <= 0
-                puts "Please enter a number shown on screen"
+                self.characters("That is not a valid choice. Please enter a number shown on screen!")
             else
                 input -= 1
                 character_detail(input)
             end
-        else
+        else 
             input.downcase!
             if input == 'back'
                 ask_for_choice
             else
-                "That's not a choice, please select again"
+                self.characters("That is not a valid choice. Please enter a number shown on screen!")
             end
         end
     end
 
-    def character_detail(choice)
+    def character_detail(choice, error_message="")
         character_choice = Character.all[choice]
         puts "~~ Studio Ghibli Vehicle Searcher ~~"
         puts "Name: #{character_choice.name}"
@@ -137,16 +149,28 @@ class Cli
         puts "Film Appeared In: #{character_choice.film}"
         puts "\n"
         puts "Would you like to go back to the previous list?"
+        puts error_message
         puts "1: Yes"
         puts "2: Exit"
         input = gets.strip
-        binding.pry
-        if input == "1"
-            self.characters
-        elsif input == "2"
-            exit
+        if input.numeric?
+            if input == "1"
+                self.characters
+            elsif  input == "2"
+                exit
+            else
+                self.character_detail(choice, "That is not a valid choice. Please enter a number shown on screen!")
+            end
+        elsif !input.numeric?
+            input.downcase!
+            if input == "exit"
+                exit
+            else
+                self.character_detail(choice, "That is not a valid choice. Please enter a number shown on screen!")
+            end
         end
     end
+    
     def vehicles
         puts "~~ Studio Ghibli Vehicle Searcher ~~"
         puts "Please select a vehicle you'd like to view information for" + "\n\n"
