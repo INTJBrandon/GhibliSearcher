@@ -15,7 +15,8 @@ Run the following snippets of code to get everything set up and running for the 
     bundle install
 This will install the neccessary ruby gems onto your machine.
 To run The Ghibli Searcher, type the following into your terminal to execute the application
-        ruby bin/run
+
+    ruby bin/run
 Follow the prompts to move through the program and enjoy!!
 
 ## License
